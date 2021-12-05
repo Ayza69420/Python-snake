@@ -125,13 +125,13 @@ while True:
         main.spawn_food()
 
         if event.type == pygame.KEYDOWN:
-            if event.unicode == 'd':
+            if event.unicode == 'd' or event.key == pygame.K_RIGHT:
                 main.move_right()
-            if event.unicode == 'w':
+            if event.unicode == 'w' or event.key == pygame.K_UP:
                 main.move_up()
-            if event.unicode == 's':
+            if event.unicode == 's' or event.key == pygame.K_DOWN:
                 main.move_down()
-            if event.unicode == 'a':
+            if event.unicode == 'a' or event.key == pygame.K_LEFT:
                 main.move_left()
 
 
