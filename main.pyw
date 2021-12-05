@@ -89,9 +89,9 @@ class MAIN:
             if head.colliderect(i) and i is not head:
                 self.restart()
 
-        if head.x >= self.width or head.x <= 0:
+        if head.x > self.width or head.x < 0:
             self.restart()
-        if head.y >= self.height or head.y <= 0:
+        if head.y > self.height or head.y < 0:
             self.restart()
             
 
