@@ -115,10 +115,14 @@ main.create()
 main.spawn_food()
 
 while True:
+    ()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
+        
+        
 
         main.window.fill((255,255,255))
 
