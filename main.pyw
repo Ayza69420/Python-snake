@@ -106,8 +106,8 @@ class MAIN:
         self.create()
 
     def spawn_food(self):
-        self.food = pygame.Rect(self.random[0], self.random[1], 40, 40)
-        pygame.draw.rect(self.window, (0,0,0), self.food)
+        self.food = pygame.Rect(self.random[0], self.random[1], 50, 50)
+        pygame.draw.rect(self.window, (255,0,0), self.food)
 
 main = MAIN()
 main.create()
