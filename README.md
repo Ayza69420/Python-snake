@@ -15,8 +15,18 @@ On the command line, type:
 
 # How to run
 
+Installation with git
+
 ``git clone https://github.com/Ayza69420/Python-snake``   
 
-``cd Python-snake``   
+Running the program 
+
+``cd Python-snake/``   
+
+Windows
 
 ``python main.pyw``  
+
+UNIX Systems
+
+```python3.9 main.py```
