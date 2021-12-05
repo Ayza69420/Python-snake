@@ -28,7 +28,7 @@ class MAIN:
     def display(self):
         if self.body_length > len(self.body):
             for i in range(self.body_length-len(self.body)):
-                self.body.insert(0, pygame.Rect(self.body[0].x*2, self.body[0].y*2, self.w, self.h))
+                self.body.insert(0, pygame.Rect(self.width*2, self.height*2, self.w, self.h))
 
         for i in self.body:
             pygame.draw.rect(self.window, (0,0,0), i)
