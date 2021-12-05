@@ -1,6 +1,8 @@
 import pygame
 from time import sleep
-from random import randint as rand
+from random import choice
+
+pygame.init()
 
 FPS = 60
 
@@ -9,20 +11,21 @@ class MAIN:
         self.width = 600
         self.height = 600
         self.window = pygame.display.set_mode((self.width, self.height))
-        self.w = 25
-        self.h = 25
-        self.rand_width = rand(40, self.width-40)
-        self.rand_height = rand(40, self.height-40)
-        self.random = [self.rand_width, self.rand_height]
-        self.distance = 1
-        self.default_body_length = 1
+        self.w = 20
+        self.h = 20
+        self.default_body_length = 2
         self.body_length = self.default_body_length
         self.body = []
+        self.random = [[i*20,i*20] for i in range(30)]
+        self.random_picked = choice(self.random)
         self.facing = 'up'
+        self.score = 0
+        self.font = pygame.font.Font("freesansbold.ttf",32)
+        self.text = self.font.render(f'Score: {self.score}',False,(0,0,0))
 
-    def create(self):
+    def create(self):                
         for i in range(self.body_length):
-            self.body.insert(0, pygame.Rect(self.width/2-50, self.height/2-50+((self.distance + self.h)*i),self.w, self.h))
+            self.body.insert(0, pygame.Rect(20, 20+(self.h*i),self.w, self.h))
         
 
     def display(self):
@@ -31,13 +34,15 @@ class MAIN:
                 self.body.insert(0, pygame.Rect(self.width*2, self.height*2, self.w, self.h))
 
         for i in self.body:
-            pygame.draw.rect(self.window, (0,0,0), i)
+            pygame.draw.rect(self.window, (79,121,66), i)
+
+        self.window.blit(self.text, (self.width/2-60, 0))
 
     def move_right(self):
         if not self.facing == 'left':
             head = self.body[len(self.body)-1]
 
-            new_head = pygame.Rect(head.x+(self.w + self.distance), head.y, head.width, head.height)
+            new_head = pygame.Rect(head.x+self.w, head.y, head.width, head.height)
 
             self.body.pop(0)
             self.body.append(new_head)
@@ -48,7 +53,7 @@ class MAIN:
         if not self.facing == 'right':
             head = self.body[len(self.body)-1]
 
-            new_head = pygame.Rect(head.x-(self.w + self.distance), head.y, head.width, head.height)
+            new_head = pygame.Rect(head.x-self.w, head.y, head.width, head.height)
 
             self.body.pop(0)
             self.body.append(new_head)
@@ -59,7 +64,7 @@ class MAIN:
         if not self.facing == 'down':
             head = self.body[len(self.body)-1]
 
-            new_head = pygame.Rect(head.x, head.y-(self.h + self.distance), head.width, head.height)
+            new_head = pygame.Rect(head.x, head.y-self.h, head.width, head.height)
 
             self.body.pop(0)
             self.body.append(new_head)
@@ -70,7 +75,7 @@ class MAIN:
         if not self.facing == 'up':
             head = self.body[len(self.body)-1]
 
-            new_head = pygame.Rect(head.x, head.y+(self.h + self.distance), head.width, head.height)
+            new_head = pygame.Rect(head.x, head.y+self.h, head.width, head.height)
 
             self.body.pop(0)
             self.body.append(new_head)       
@@ -92,11 +97,11 @@ class MAIN:
 
         if (head.x >= self.food.x and head.x <= self.food.x + self.food.width) and (head.y >= self.food.y and head.y <= self.food.y + self.food.height):
             self.body_length += 1
-            
-            self.rand_width = rand(40, self.width-40)
-            self.rand_height = rand(40, self.height-40)
-            self.random = [self.rand_width, self.rand_height]
+            self.score += 1
 
+            self.text = self.font.render(f'Score: {self.score}',False,(0,0,0))
+
+            self.random_picked = choice(self.random)
             self.spawn_food()
 
     def restart(self):
@@ -106,13 +111,14 @@ class MAIN:
         self.create()
 
     def spawn_food(self):
-        self.food = pygame.Rect(self.random[0], self.random[1], 50, 50)
+        
+   
+        self.food = pygame.Rect(self.random_picked[0],self.random_picked[1],20,20)
+
         pygame.draw.rect(self.window, (255,0,0), self.food)
 
 main = MAIN()
 main.create()
-
-main.spawn_food()
 
 while True:
     ()
