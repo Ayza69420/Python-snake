@@ -107,6 +107,7 @@ class MAIN:
     def restart(self):
         self.body = []
         self.score = 0
+        self.window.blit(self.text, (self.width/2-60, 0))
         
         self.body_length = self.default_body_length
         
