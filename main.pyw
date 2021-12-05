@@ -15,7 +15,7 @@ class MAIN:
         self.rand_height = rand(40, self.height-40)
         self.random = [self.rand_width, self.rand_height]
         self.distance = 1
-        self.default_body_length = 5
+        self.default_body_length = 1
         self.body_length = self.default_body_length
         self.body = []
         self.facing = 'up'
