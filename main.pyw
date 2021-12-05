@@ -106,6 +106,8 @@ class MAIN:
 
     def restart(self):
         self.body = []
+        self.score = 0
+        
         self.body_length = self.default_body_length
         
         self.create()
