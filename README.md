@@ -15,8 +15,8 @@ On the command line, type:
 
 # How to run
 
-```git clone https://github.com/Ayza69420/Python-snake```  
+``git clone https://github.com/Ayza69420/Python-snake``   
 
-```cd Python-snake```  
+``cd Python-snake``   
 
-```python main.pyw```  
+``python main.pyw``  
