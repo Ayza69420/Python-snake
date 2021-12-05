@@ -13,13 +13,13 @@ On the command line, type:
 
 ```pip install pygame```
 
-# How to run
+# How to Install
 
 Installation with git
 
 ``git clone https://github.com/Ayza69420/Python-snake``   
 
-Running the program 
+# Running the program
 
 ``cd Python-snake/``   
 
