@@ -1,4 +1,5 @@
 import pygame
+from math import sqrt
 from time import sleep
 from random import choice
 
@@ -25,7 +26,7 @@ class MAIN:
 
     def create(self):                
         for i in range(self.body_length):
-            self.body.insert(0, pygame.Rect(20, 20+(self.h*i),self.w, self.h))
+            self.body.insert(0, pygame.Rect(20, 20+(sqrt(20*20)),self.w, self.h))
         
 
     def display(self):
@@ -42,7 +43,7 @@ class MAIN:
         if not self.facing == 'left':
             head = self.body[len(self.body)-1]
 
-            new_head = pygame.Rect(head.x+self.w, head.y, head.width, head.height)
+            new_head = pygame.Rect(head.x+(sqrt(head.width*head.height)), head.y, head.width, head.height)
 
             self.body.pop(0)
             self.body.append(new_head)
@@ -53,7 +54,7 @@ class MAIN:
         if not self.facing == 'right':
             head = self.body[len(self.body)-1]
 
-            new_head = pygame.Rect(head.x-self.w, head.y, head.width, head.height)
+            new_head = pygame.Rect(head.x-(sqrt(head.width*head.height)), head.y, head.width, head.height)
 
             self.body.pop(0)
             self.body.append(new_head)
@@ -64,7 +65,7 @@ class MAIN:
         if not self.facing == 'down':
             head = self.body[len(self.body)-1]
 
-            new_head = pygame.Rect(head.x, head.y-self.h, head.width, head.height)
+            new_head = pygame.Rect(head.x, head.y-sqrt(head.width*head.height), head.width, head.height)
 
             self.body.pop(0)
             self.body.append(new_head)
@@ -75,7 +76,7 @@ class MAIN:
         if not self.facing == 'up':
             head = self.body[len(self.body)-1]
 
-            new_head = pygame.Rect(head.x, head.y+self.h, head.width, head.height)
+            new_head = pygame.Rect(head.x, head.y+(sqrt(head.width*head.height)), head.width, head.height)
 
             self.body.pop(0)
             self.body.append(new_head)       
