@@ -29,4 +29,4 @@ Windows
 
 UNIX Systems
 
-```python3.9 main.pyw```
+```python3 main.pyw```
