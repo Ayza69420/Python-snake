@@ -7,17 +7,13 @@ Snake game made in python with the pygame library.
 - pip
 - pygame
 
-# Pygame Installation
+# Installation
 
-On the command line, type:
+- First clone the repository using git in the command line ``git clone https://github.com/Ayza69420/Python-snake.git``   
+- Run ``cd Python-snake``
+- Run ``pip install -r requirements.txt`` to install any required libraries.
 
-```pip install pygame```
-
-# How to Install
-
-Installation with git
-
-``git clone https://github.com/Ayza69420/Python-snake``   
+# How 
 
 # Running the program
 
