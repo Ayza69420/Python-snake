@@ -96,7 +96,7 @@ class MAIN:
             self.restart()
             
 
-        if (head.x >= self.food.x and head.x <= self.food.x + self.food.width) and (head.y >= self.food.y and head.y <= self.food.y + self.food.height):
+        if head.colliderect(i) and i is not head:
             self.body_length += 1
             self.score += 1
 
