@@ -13,8 +13,6 @@ Snake game made in python with the pygame library.
 - Run ``cd Python-snake``
 - Run ``pip install -r requirements.txt`` to install any required libraries.
 
-# How 
-
 # Running the program
 
 ``cd Python-snake/``   
