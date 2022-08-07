@@ -1,157 +1,102 @@
 import pygame
-from math import sqrt
-from time import sleep
-from random import choice
+import random
 
 pygame.init()
 
-FPS = 60
+width, height = dimensions = (600, 600)
+window = pygame.display.set_mode(dimensions)
+clock = pygame.time.Clock()
 
-class MAIN:
+BACKGROUND_COLOR = (255, 255, 255)
+SNAKE_COLOR = (120,190,33)
+FOOD_COLOR = (199, 55, 47)
+TEXT_COLOR = (0, 0, 0)
+TEXT_SIZE = 50
+
+SNAKE_SIZE = 20
+FPS = 20
+
+font = pygame.font.SysFont("fixedsys500c", TEXT_SIZE)
+
+class Game:
     def __init__(self):
-        self.width = 600
-        self.height = 600
-        self.window = pygame.display.set_mode((self.width, self.height))
-        self.w = 20
-        self.h = 20
-        self.default_body_length = 2
-        self.body_length = self.default_body_length
-        self.body = []
-        self.random = [[i*20,i*20] for i in range(30)]
-        self.random_picked = choice(self.random)
-        self.facing = 'up'
-        self.score = 0
-        self.font = pygame.font.Font("freesansbold.ttf",32)
-        self.text = self.font.render(f'Score: {self.score}',False,(0,0,0))
-
-    def create(self):                
-        for i in range(self.body_length):
-            self.body.insert(0, pygame.Rect(20, 20+(sqrt(20*20)),self.w, self.h))
+        self.places = [[x,y] for y in range(0, height, SNAKE_SIZE) for x in range(0, width, SNAKE_SIZE)]
         
+        self.start()
 
     def display(self):
-        if self.body_length > len(self.body):
-            for i in range(self.body_length-len(self.body)):
-                self.body.insert(0, pygame.Rect(self.width*2, self.height*2, self.w, self.h))
+        window.fill(BACKGROUND_COLOR)
 
-        for i in self.body:
-            pygame.draw.rect(self.window, (79,121,66), i)
+        head = self.snake[-1]
 
-        self.window.blit(self.text, (self.width/2-60, 0))
-
-    def move_right(self):
-        if not self.facing == 'left':
-            head = self.body[len(self.body)-1]
-
-            new_head = pygame.Rect(head.x+(sqrt(head.width*head.height)), head.y, head.width, head.height)
-
-            self.body.pop(0)
-            self.body.append(new_head)
-            
-            self.facing = 'right'
-
-    def move_left(self):
-        if not self.facing == 'right':
-            head = self.body[len(self.body)-1]
-
-            new_head = pygame.Rect(head.x-(sqrt(head.width*head.height)), head.y, head.width, head.height)
-
-            self.body.pop(0)
-            self.body.append(new_head)
-
-            self.facing = 'left'
-
-    def move_up(self):
-        if not self.facing == 'down':
-            head = self.body[len(self.body)-1]
-
-            new_head = pygame.Rect(head.x, head.y-sqrt(head.width*head.height), head.width, head.height)
-
-            self.body.pop(0)
-            self.body.append(new_head)
-
-            self.facing = 'up'
-
-    def move_down(self):
-        if not self.facing == 'up':
-            head = self.body[len(self.body)-1]
-
-            new_head = pygame.Rect(head.x, head.y+(sqrt(head.width*head.height)), head.width, head.height)
-
-            self.body.pop(0)
-            self.body.append(new_head)       
-
-            self.facing = 'down'
-
-    def collision_check(self):
-        head = self.body[len(self.body)-1]
-
-        for i in self.body:
-            if head.colliderect(i) and i is not head:
-                self.restart()
-
-        if head.x > self.width or head.x < 0:
-            self.restart()
-        if head.y > self.height or head.y < 0:
-            self.restart()
-            
-
-        if head.colliderect(i) and i is not head:
-            self.body_length += 1
+        if head.x == self.food.x and head.y == self.food.y:
+            self.generate_food()
+            self.extend_snake()
             self.score += 1
 
-            self.text = self.font.render(f'Score: {self.score}',False,(0,0,0))
+        for i in self.snake:
+            pygame.draw.rect(window, SNAKE_COLOR, i)
+            
+        pygame.draw.rect(window, FOOD_COLOR, self.food)
 
-            self.random_picked = choice(self.random)
-            self.spawn_food()
+        text = font.render(f"Score: {self.score}", False, TEXT_COLOR)
+        window.blit(text, (width//2-TEXT_SIZE, 0))
 
-    def restart(self):
-        self.body = []
+        self.collision_check()
+
+    def extend_snake(self):
+        x, y = self.snake[-1].x, self.snake[-1].y
+
+        self.snake.append(pygame.Rect(x+self.direction[0]*SNAKE_SIZE, y+self.direction[1]*SNAKE_SIZE, SNAKE_SIZE, SNAKE_SIZE))
+
+    def move(self):
+        self.extend_snake()
+        self.snake.pop(0)
+
+    def generate_food(self):
+        self.food = pygame.Rect(*random.choice(self.places), SNAKE_SIZE, SNAKE_SIZE)
+
+    def collision_check(self):
+        head = self.snake[-1]
+
+        for part in self.snake[:-1]:
+            if part.x == head.x and part.y == head.y:
+                self.start()
+
+        if head.x > width or head.x < 0:
+            self.start()
+        if head.y > height or head.y < 0:
+            self.start()
+
+    def start(self):
         self.score = 0
-
-        self.text = self.font.render(f'Score: {self.score}',False,(0,0,0))
+        self.snake = [pygame.Rect(300, 0, SNAKE_SIZE, SNAKE_SIZE)]
+        self.direction = [0, 1]
+        self.generate_food()
         
-        self.body_length = self.default_body_length
-        
-        self.create()
+        for _ in range(2):
+            self.extend_snake()
 
-    def spawn_food(self):
-        
-   
-        self.food = pygame.Rect(self.random_picked[0],self.random_picked[1],20,20)
-
-        pygame.draw.rect(self.window, (255,0,0), self.food)
-
-main = MAIN()
-main.create()
+game = Game()
 
 while True:
-    ()
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            exit()
-        
-        
+        elif event.type == pygame.KEYDOWN:
+            char = event.unicode.lower()
 
-        main.window.fill((255,255,255))
+            if char == "w" and game.direction != [0, 1]:
+                game.direction = [0, -1]
+            elif char == "s" and game.direction != [0, -1]:
+                game.direction = [0, 1]
+            elif char == "a" and game.direction != [1, 0]:
+                game.direction = [-1, 0]
+            elif char == "d" and game.direction != [-1, 0]:
+                game.direction = [1, 0]
 
-        main.spawn_food()
+    game.move()
 
-        if event.type == pygame.KEYDOWN:
-            if event.unicode == 'd' or event.key == pygame.K_RIGHT:
-                main.move_right()
-            if event.unicode == 'w' or event.key == pygame.K_UP:
-                main.move_up()
-            if event.unicode == 's' or event.key == pygame.K_DOWN:
-                main.move_down()
-            if event.unicode == 'a' or event.key == pygame.K_LEFT:
-                main.move_left()
-
-
-        main.collision_check()
-        main.display()
-        pygame.display.update()
-
-        sleep(1/FPS)
+    game.display()
+    clock.tick(FPS)
+    pygame.display.flip()
