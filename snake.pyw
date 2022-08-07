@@ -42,8 +42,6 @@ class Game:
         text = font.render(f"Score: {self.score}", False, TEXT_COLOR)
         window.blit(text, (width//2-TEXT_SIZE, 0))
 
-        self.collision_check()
-
     def extend_snake(self):
         x, y = self.snake[-1].x, self.snake[-1].y
 
@@ -57,14 +55,14 @@ class Game:
         self.food = pygame.Rect(*random.choice(self.places), SNAKE_SIZE, SNAKE_SIZE)
 
     def collision_check(self):
-        head = self.snake[-1]
+        head = game.snake[-1]
 
-        for part in self.snake:
+        for part in game.snake:
             if part.colliderect(head) and part is not head:
-                self.start()
+                game.start()
 
         if (head.x > width or head.x < 0) or (head.y > height or head.y < 0):
-            self.start()
+            game.start()
 
     def start(self):
         self.score = 0
@@ -84,17 +82,17 @@ while True:
         elif event.type == pygame.KEYDOWN:
             char = [event.unicode.lower(), event.key]
             
-            if char[0] == "w" or char[1] == pygame.K_UP and game.direction != [0, 1]:
+            if (char[0] == "w" or char[1] == pygame.K_UP) and game.direction != [0, 1]:
                 game.direction = [0, -1]
-            elif char[0] == "s" or char[1] == pygame.K_DOWN and game.direction != [0, -1]:
+            elif (char[0] == "s" or char[1] == pygame.K_DOWN) and game.direction != [0, -1]:
                 game.direction = [0, 1]
-            elif char[0] == "a" or char[1] == pygame.K_LEFT and game.direction != [1, 0]:
+            elif (char[0] == "a" or char[1] == pygame.K_LEFT) and game.direction != [1, 0]:
                 game.direction = [-1, 0]
-            elif char[0] == "d" or char[1] == pygame.K_RIGHT and game.direction != [-1, 0]:
+            elif (char[0] == "d" or char[1] == pygame.K_RIGHT) and game.direction != [-1, 0]:
                 game.direction = [1, 0]
-
+    
+    game.collision_check()
     game.move()
-
     game.display()
     clock.tick(FPS)
     pygame.display.flip()
