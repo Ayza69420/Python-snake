@@ -60,12 +60,10 @@ class Game:
         head = self.snake[-1]
 
         for part in self.snake:
-            if (part.x == head.x and part.y == head.y) and part is not head:
+            if part.colliderect(head) and part is not head:
                 self.start()
 
-        if head.x > width or head.x < 0:
-            self.start()
-        if head.y > height or head.y < 0:
+        if (head.x > width or head.x < 0) or (head.y > height or head.y < 0):
             self.start()
 
     def start(self):
@@ -84,15 +82,15 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
         elif event.type == pygame.KEYDOWN:
-            char = event.unicode.lower()
-
-            if char == "w" and game.direction != [0, 1]:
+            char = [event.unicode.lower(), event.key]
+            
+            if char[0] == "w" or char[1] == pygame.K_UP and game.direction != [0, 1]:
                 game.direction = [0, -1]
-            elif char == "s" and game.direction != [0, -1]:
+            elif char[0] == "s" or char[1] == pygame.K_DOWN and game.direction != [0, -1]:
                 game.direction = [0, 1]
-            elif char == "a" and game.direction != [1, 0]:
+            elif char[0] == "a" or char[1] == pygame.K_LEFT and game.direction != [1, 0]:
                 game.direction = [-1, 0]
-            elif char == "d" and game.direction != [-1, 0]:
+            elif char[0] == "d" or char[1] == pygame.K_RIGHT and game.direction != [-1, 0]:
                 game.direction = [1, 0]
 
     game.move()
