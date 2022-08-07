@@ -3,18 +3,18 @@ import random
 
 pygame.init()
 
-width, height = dimensions = (600, 600)
+width, height = dimensions = (400, 400)
 window = pygame.display.set_mode(dimensions)
 clock = pygame.time.Clock()
 
-BACKGROUND_COLOR = (255, 255, 255)
+BACKGROUND_COLOR = (150, 150, 150)
 SNAKE_COLOR = (120,190,33)
 FOOD_COLOR = (199, 55, 47)
 TEXT_COLOR = (0, 0, 0)
 TEXT_SIZE = 50
 
 SNAKE_SIZE = 20
-FPS = 20
+FPS = 15
 
 font = pygame.font.SysFont("fixedsys500c", TEXT_SIZE)
 
@@ -40,7 +40,7 @@ class Game:
         pygame.draw.rect(window, FOOD_COLOR, self.food)
 
         text = font.render(f"Score: {self.score}", False, TEXT_COLOR)
-        window.blit(text, (width//2-TEXT_SIZE, 0))
+        window.blit(text, (width//2-TEXT_SIZE-15, 0))
 
     def extend_snake(self):
         x, y = self.snake[-1].x, self.snake[-1].y
@@ -55,14 +55,14 @@ class Game:
         self.food = pygame.Rect(*random.choice(self.places), SNAKE_SIZE, SNAKE_SIZE)
 
     def collision_check(self):
-        head = game.snake[-1]
+        head = self.snake[-1]
+
+        if (head.x > width or head.x < 0) or (head.y > height or head.y < 0):
+            self.start()
 
         for part in game.snake:
             if part.colliderect(head) and part is not head:
-                game.start()
-
-        if (head.x > width or head.x < 0) or (head.y > height or head.y < 0):
-            game.start()
+                self.start()
 
     def start(self):
         self.score = 0
@@ -70,7 +70,7 @@ class Game:
         self.direction = [0, 1]
         self.generate_food()
         
-        for _ in range(2):
+        for _ in range(1):
             self.extend_snake()
 
 game = Game()
