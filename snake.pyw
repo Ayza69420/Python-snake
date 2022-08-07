@@ -59,8 +59,8 @@ class Game:
     def collision_check(self):
         head = self.snake[-1]
 
-        for part in self.snake[:-1]:
-            if part.x == head.x and part.y == head.y:
+        for part in self.snake:
+            if (part.x == head.x and part.y == head.y) and part is not head:
                 self.start()
 
         if head.x > width or head.x < 0:
