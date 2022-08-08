@@ -3,7 +3,7 @@ import random
 
 pygame.init()
 
-width, height = dimensions = (400, 400)
+width, height = dimensions = (500, 500)
 window = pygame.display.set_mode(dimensions)
 pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
