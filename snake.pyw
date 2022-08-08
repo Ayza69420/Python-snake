@@ -5,6 +5,7 @@ pygame.init()
 
 width, height = dimensions = (400, 400)
 window = pygame.display.set_mode(dimensions)
+pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
 
 BACKGROUND_COLOR = (150, 150, 150)
