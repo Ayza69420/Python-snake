@@ -19,8 +19,8 @@ Snake game made in python with the pygame library.
 
 Windows
 
-``python main.pyw``  
+``python snake.pyw``  
 
 UNIX Systems
 
-```python3 main.pyw```
+```python3 snake.pyw```
