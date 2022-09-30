@@ -58,7 +58,7 @@ class Game:
     def collision_check(self):
         head = self.snake[-1]
 
-        if (head.x > width or head.x < 0) or (head.y > height or head.y < 0):
+        if (head.x >= width or head.x < 0) or (head.y >= height or head.y < 0):
             self.start()
 
         for part in game.snake:
@@ -71,8 +71,7 @@ class Game:
         self.direction = [0, 1]
         self.generate_food()
         
-        for _ in range(1):
-            self.extend_snake()
+        self.extend_snake()
 
 game = Game()
 
